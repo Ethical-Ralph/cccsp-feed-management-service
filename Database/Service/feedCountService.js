@@ -1,4 +1,5 @@
 const { sortByDate } = require("../../Utils/helper");
+const config = require("../../Config/env");
 
 const uuid = require("uuid").v1;
 
@@ -12,23 +13,24 @@ const FeedsCollection = async (db) => {
   }
 };
 
-exports.initializeFeedCounter = async (db) => {
-  try {
-    const { documentCount, feedCollection } = await FeedsCollection(db);
-    if (documentCount === 0) {
-      const feedModelsData = {
-        name: "FeedV1",
-        _id: uuid(),
-        count: 0,
-        dateCreated: new Date(),
-      };
-      await feedCollection.insertOne(feedModelsData);
-      console.log("Feed collection counter initialized");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+// exports.initializeFeedCounter = async (db) => {
+//   try {
+//     const { documentCount, feedCollection } = await FeedsCollection(db);
+//     if (documentCount === 0) {
+//       const feedModelsData = {
+//         name: "FeedV1",
+//         _id: uuid(),
+//         count: 0,
+//         dateCreated: new Date(),
+//       };
+//       await feedCollection.insertOne(feedModelsData);
+//       console.log("Feed collection counter initialized");
+//       return;
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 const getAllFeedCollection = async (db) => {
   try {
@@ -54,7 +56,7 @@ exports.getPreviousCollection = (allCollection) => {
 exports.getAvailableCollection = async (db) => {
   try {
     const feedCountsData = await getAllFeedCollection(db);
-    return feedCountsData.find((val) => val.count < 10000);
+    return feedCountsData.find((val) => val.count < config.maxFeedInCollection);
   } catch (error) {
     throw error;
   }

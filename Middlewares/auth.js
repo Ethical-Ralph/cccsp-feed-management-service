@@ -1,5 +1,4 @@
 const { userServiceEndpoint } = require("../Config/env");
-const { authenticationError } = require("../Utils/error");
 
 const verifySession = (req) => {};
 

@@ -110,10 +110,11 @@ exports.countShare = async (db, documentId, collectionId) => {
 exports.deleteFeed = async (db, documentId, collectionId) => {
   try {
     const collectionDetails = await getCollectionNameById(db, collectionId);
-
-    await db
-      .collection(collectionDetails.name)
-      .deleteOne({ _id: `${documentId}.${collectionId}` });
+    const id = `${documentId}.${collectionId}`;
+    await db.collection(collectionDetails.name).deleteOne({ _id: id });
+    await db.collection("comment").deleteMany({
+      feedId: id,
+    });
     return;
   } catch (error) {
     throw error;

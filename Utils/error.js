@@ -36,45 +36,41 @@ const errorHandler = (app) => {
 
 // Error Responses
 
-const authenticationError = (message) => {
-  const err = new Error();
-  err.name = "Authentication Error";
-  err.status = 401;
-  err.message = message;
-  throw err;
-};
+// const authenticationError = (message) => {
+//   const err = new Error();
+//   err.name = "Authentication Error";
+//   err.status = 401;
+//   err.message = message;
+//   throw err;
+// };
 
-const requestError = (message) => {
-  const err = new Error();
-  err.name = "Bad Request";
-  err.status = 400;
-  err.message = message;
-  throw err;
-};
+// const requestError = (message) => {
+//   const err = new Error();
+//   err.name = "Bad Request";
+//   err.status = 400;
+//   err.message = message;
+//   throw err;
+// };
 
-const notFoundError = (message) => {
-  const err = new Error();
-  err.name = "Not Found";
-  err.status = 404;
-  err.message = message;
-  return err;
-};
+// const notFoundError = (message) => {
+//   const err = new Error();
+//   err.name = "Not Found";
+//   err.status = 404;
+//   err.message = message;
+//   return err;
+// };
 
-const catchError = (error, next) => {
-  switch (error.name) {
-    case "CastError":
-      error = "Sorry this ID is invalid";
-      return next(error);
+// const catchError = (error, next) => {
+//   switch (error.name) {
+//     case "CastError":
+//       error = "Sorry this ID is invalid";
+//       return next(error);
 
-    default:
-      return next(error);
-  }
-};
+//     default:
+//       return next(error);
+//   }
+// };
 
 module.exports = {
   errorHandler,
-  authenticationError,
-  requestError,
-  catchError,
-  notFoundError,
 };

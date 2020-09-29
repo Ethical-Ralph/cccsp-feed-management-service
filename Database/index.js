@@ -3,19 +3,26 @@ const { MongoClient } = require("mongodb");
 // const path = require("path");
 // const mongoose = require("mongoose");
 
-const connectDatabase = async (uri) => {
-  const client = new MongoClient(uri, { useUnifiedTopology: true });
+let db;
 
-  try {
-    await client.connect();
+const database = {
+  async connect(uri) {
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
 
-    const db = client.db("myapp");
-    console.log("database connected");
-    return db;
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
+    try {
+      await client.connect();
+      db = client.db();
+      console.log("database connected");
+      return db;
+    } catch (error) {
+      console.log(error);
+      process.exit(1);
+    }
+  },
+  async drop() {
+    await db.dropDatabase();
+    return;
+  },
 };
 
-module.exports = connectDatabase;
+module.exports = database;
