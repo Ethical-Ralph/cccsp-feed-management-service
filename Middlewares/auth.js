@@ -1,13 +1,15 @@
-const {userServiceEndpoint} = require("../Config/env");
+const { userServiceEndpoint } = require("../Config/env");
+const { authenticationError } = require("../Utils/error");
 
-const verifySession = (req) => {
-  
-};
+const verifySession = (req) => {};
 
 const auth = async (req, res, next) => {
   try {
-    const user = verifySession(req);
-    if (!user) throw Error("User isn't logged in");
+    // const user = verifySession(req);
+    // if (!user) throw authenticationError("User isn't logged in");
+    const user = {
+      id: "hsdflgdf98dfffv778t",
+    };
     req.user = user;
     next();
   } catch (error) {
@@ -15,4 +17,6 @@ const auth = async (req, res, next) => {
   }
 };
 
-module.exports = auth;
+const adminRoles = ["admin", "superadmin"];
+
+module.exports = { auth, adminRoles };
